@@ -8,7 +8,7 @@ public class Main {
 	static int []dx = {0,-1,0,1};
 	static int N,M;
 	static int iy,ix; //도연이의 좌표
-	static int cnt=0;
+	static int cnt=0;//cnt
 	static void bfs(int y,int x) {
 		ArrayDeque<int[]> q = new ArrayDeque<>();
 		q.offer(new int[] {y,x});

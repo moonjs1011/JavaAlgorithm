@@ -14,7 +14,8 @@ public class Main {
 		int maxHeight = Integer.MIN_VALUE;
 		int maxHeightIdx = -1;
 		
-		int []arr = new int[6];
+		int []arr = new int[6]; //변들을 저장
+		
 		st = new StringTokenizer(br.readLine());
 		int K = Integer.parseInt(st.nextToken());
 		for(int i=0;i<6;i++) {

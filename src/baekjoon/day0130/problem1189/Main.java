@@ -3,6 +3,8 @@ package baekjoon.day0130.problem1189;
 import java.io.*;
 import java.util.*;
 
+
+
 public class Main {
 	static int[] dy = { -1, 0, 1, 0 };
 	static int[] dx = { 0, -1, 0, 1 };
@@ -12,7 +14,8 @@ public class Main {
 
 	static void dfs(int y, int x, int depth) {
 		if (y == 0 && x == C - 1) {
-			cnt++;
+			if(depth==K)
+				cnt++;
 			return;
 		}
 		if (visited[y][x])
@@ -22,11 +25,13 @@ public class Main {
 			int ny = y + dy[i];
 			int nx = x + dx[i];
 			if (ny >= 0 && ny < R && nx >= 0 && nx < C && !visited[ny][nx] && matrix[ny][nx] == '.') {
-				visited[ny][nx] = true;
 				dfs(ny, nx, depth + 1);
 				visited[ny][nx] = false;
 			}
 		}
+		visited[y][x] = false;
+
+		
 
 	}
 
@@ -50,10 +55,10 @@ public class Main {
 			for (int j = 0; j < C; j++) {
 				matrix[i][j] = line.charAt(j);
 			}
-		}
-		dfs(R-1,0, 0);
 
-		sb.append(cnt);
+		}
+		dfs(R-1,0, 1);
+		sb.append(cnt+" ");
 		System.out.println(cnt);
 	}
 

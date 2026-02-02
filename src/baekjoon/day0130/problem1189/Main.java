@@ -18,18 +18,17 @@ public class Main {
 				cnt++;
 			return;
 		}
-		if (visited[y][x])
-			return;
-		visited[y][x] = true;
+		
 		for (int i = 0; i < 4; i++) {
 			int ny = y + dy[i];
 			int nx = x + dx[i];
 			if (ny >= 0 && ny < R && nx >= 0 && nx < C && !visited[ny][nx] && matrix[ny][nx] == '.') {
+				visited[ny][nx] = true;
 				dfs(ny, nx, depth + 1);
 				visited[ny][nx] = false;
 			}
 		}
-		visited[y][x] = false;
+		
 
 		
 
@@ -57,6 +56,7 @@ public class Main {
 			}
 
 		}
+		visited[R-1][0]=true;
 		dfs(R-1,0, 1);
 		sb.append(cnt+" ");
 		System.out.println(cnt);

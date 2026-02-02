@@ -1,4 +1,4 @@
-
+package swea.etc.problem1289;
 import java.util.Scanner;
 import java.io.FileInputStream;
 

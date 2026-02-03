@@ -37,7 +37,7 @@ public class MainAgain {
 				break;
 		}
 		StringBuilder sb = new StringBuilder();
-		sb.append(res[0] + " " + res[1]);
+		sb.append(res[0] + " " + res[1]+"\n");
 		System.out.println(sb);
 	}
 

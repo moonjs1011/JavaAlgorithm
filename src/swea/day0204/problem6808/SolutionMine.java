@@ -6,7 +6,6 @@ import java.io.*;
 public class SolutionMine {
 	static int[] A; // 규영이
 	static int[] B; // 인영이
-	static boolean[] visited;
 	static int winA;
 
 	static int factorial(int n) {
@@ -15,11 +14,13 @@ public class SolutionMine {
 		else
 			return n * factorial(n - 1);
 	}
-	static void swap(int idx1,int idx2) {
+
+	static void swap(int idx1, int idx2) {
 		int temp = B[idx1];
 		B[idx1] = B[idx2];
-		B[idx2] =temp;
+		B[idx2] = temp;
 	}
+
 	static void perm(int depth) {
 		if (depth == 9) {
 			int sumA = 0;
@@ -29,18 +30,18 @@ public class SolutionMine {
 					sumA += A[i] + B[i];
 				else
 					sumB += A[i] + B[i];
-				
+
 			}
-			if(sumA>sumB) winA +=1;
+			if (sumA > sumB)
+				winA += 1;
 			return;
 		}
-			for(int i=depth;i<9;i++) {
-					swap(depth,i);
-					perm(depth+1);
-					swap(depth,i);
-					
-			}
+		for (int i = depth; i < 9; i++) {
+			swap(depth, i);
+			perm(depth + 1);
+			swap(depth, i);
 		}
+	}
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -51,11 +52,9 @@ public class SolutionMine {
 		int totalRound = factorial(9);
 		for (int tc = 1; tc <= T; tc++) {
 			st = new StringTokenizer(br.readLine());
-	
-			
+
 			A = new int[9];
 			B = new int[9];
-			visited = new boolean[9];
 			winA = 0;
 
 			for (int i = 0; i < 9; i++) {

@@ -7,7 +7,7 @@ import java.util.*;
 public class Solution {
 	static int []A ;
 	static int []B;
-	static int []target;
+	static int []target;  
 	static boolean []visited;
 	static int winA=0;
 	static int factorial(int n) {

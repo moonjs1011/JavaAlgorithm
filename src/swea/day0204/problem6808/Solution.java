@@ -1,6 +1,9 @@
 package swea.day0204.problem6808;
 import java.io.*;
 import java.util.*;
+/*
+ * 강사님이 알려주신 풀이법으로 풀었다.
+ */
 public class Solution {
 	static int []A ;
 	static int []B;

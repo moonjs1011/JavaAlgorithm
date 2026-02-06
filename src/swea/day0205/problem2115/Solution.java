@@ -11,10 +11,6 @@ import java.util.*;
  * 2차원 배열 2개 ex [[0,1,2,3,4],[5,6,7,8,9]]
  * worst case : 81개의 조합
  */
-class Point{
-	int y;
-	int x;
-}
 public class Solution {
 	static int N, M, C;
 	static int[][] matrix;

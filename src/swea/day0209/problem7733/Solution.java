@@ -10,7 +10,6 @@ public class Solution {
 	static int[][] matrix;
 	static boolean[][] visited;
 	static void bfs(int y,int x) {
-		
 		ArrayDeque<int[]> q = new ArrayDeque<>();
 		q.offer(new int[] {y,x});
 		visited[y][x] =true;
@@ -49,19 +48,22 @@ public class Solution {
 			st =new StringTokenizer(br.readLine());
 			N = Integer.parseInt(st.nextToken());
 			matrix = new int[N][N];
-
+			int maxDay = 1;
 			for(int i=0;i<N;i++) {
 				st =new StringTokenizer(br.readLine());
 				for(int j=0;j<N;j++) {
 					matrix[i][j] = Integer.parseInt(st.nextToken());
+					maxDay = Math.max(maxDay, matrix[i][j]); //maxDay 최신화
 				}
 			}
 			int maxCnt=1; //0으로 하면 한개의 히든 tc에 오답나옴 
-			for(int day=1;day<=100;day++) {
+			for(int day=1;day<=maxDay;day++) {
 				visited = new boolean[N][N];
 				for(int i=0;i<N;i++) {
 					for(int j=0;j<N;j++) {
-						if(matrix[i][j]==day) matrix[i][j]=0;
+						//matrix[i][j] 값이 0이면 갉아먹혔다고 치부
+						//문제에서 값이 1부터 100사이의 숫자로 주어진다고 했으므로 안전.
+						if(matrix[i][j]==day) matrix[i][j]=0; 
 					}
 				}
 				int cnt=0;

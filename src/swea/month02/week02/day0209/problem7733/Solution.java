@@ -15,7 +15,7 @@ public class Solution {
 		visited[y][x] =true;
 		while(!q.isEmpty()) {
 			int[] info = q.poll();
-			int cy = info[0];
+			int cy = info[0]; 
 			int cx = info[1];
 			for(int i=0;i<4;i++) {
 				int ny = cy + dy[i];
@@ -41,22 +41,27 @@ public class Solution {
 	}
 	public static void main(String[] args) throws IOException{
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
 		StringBuilder sb =new StringBuilder();
+		
+		StringTokenizer st = new StringTokenizer(br.readLine());
 		int T = Integer.parseInt(st.nextToken());
 		for(int tc=1;tc<=T;tc++) {
 			st =new StringTokenizer(br.readLine());
+			
 			N = Integer.parseInt(st.nextToken());
 			matrix = new int[N][N];
+			
+			//matrix 입력 받기 및 최대 날짜값 찾기
 			int maxDay = 1;
 			for(int i=0;i<N;i++) {
 				st =new StringTokenizer(br.readLine());
 				for(int j=0;j<N;j++) {
 					matrix[i][j] = Integer.parseInt(st.nextToken());
-					maxDay = Math.max(maxDay, matrix[i][j]); //maxDay 최신화
+					maxDay = Math.max(maxDay, matrix[i][j]); //maxDay 갱신
 				}
 			}
-			int maxCnt=1; //0으로 하면 한개의 히든 tc에 오답나옴 
+			
+			int maxCnt=1; //0으로 하면 한개의 히든 tc에 오답나옴, 0일차에는 치즈가 1개의 덩어리
 			for(int day=1;day<=maxDay;day++) {
 				visited = new boolean[N][N];
 				for(int i=0;i<N;i++) {
@@ -70,6 +75,7 @@ public class Solution {
 				for(int i=0;i<N;i++) {
 					for(int j=0;j<N;j++) {
 						if(matrix[i][j]!=0&&!visited[i][j]) {
+							//한 덩어리의 개수 세기
 							//dfs(i,j);
 							bfs(i,j);
 							cnt++;

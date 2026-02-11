@@ -5,7 +5,7 @@ import java.util.*;
 public class MainAgain {
     static Map<Integer,Integer> pMap = new HashMap<>();//컨테이너들의 개수를 확인하는 Map
     static Queue<int[]> belt = new ArrayDeque<>(); //컨베이어 벨트
-    static Stack<int[]> stackSpace = new Stack<>();
+    static Stack<int[]> stackSpace = new Stack<>();//적재를 위한 공간
 
     static int cost=0;
     public static void main(String[] args) throws IOException{
@@ -58,7 +58,7 @@ public class MainAgain {
                 cost += topW;
                 tempSpace.push(top);
             }
-            //map관리
+            //벨트위에 존재하는 컨테이너들의 map(개수)관리
             if (pMap.get(frontQP) == 1)
                 pMap.remove(frontQP);
             else pMap.put(frontQP, pMap.get(frontQP) - 1);

@@ -12,7 +12,7 @@ output==>10
 import java.io.*;
 
 import java.util.*;
-public class PrimMain {
+public class PrimPqMain {
     public static void main(String[] args) throws Exception{
         Scanner sc = new Scanner(System.in);
         int N = sc.nextInt();
@@ -26,22 +26,25 @@ public class PrimMain {
             }
         }
         int []P = new int[N]; Arrays.fill(P,Integer.MAX_VALUE);
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b)->Integer.compare(a[1], b[1]));
         int mst=0,cnt=0;
         P[0] = 0;
-        for(int i=0;i<N;i++){
-            int minVertex = -1;
-            int min = Integer.MAX_VALUE;
-            for(int j=0;j<N;j++){
-                if(!v[j] && min>P[j]){
-                    min =P[j]; minVertex = j;
-                }
-            }
-            v[minVertex] = true;
+        pq.offer(new int[] {0,P[0]}); //0번 정점의 가중치는 P[0]<-0
+        while(!pq.isEmpty()){
+        	int[]vc = pq.poll();
+        	
+            int minVertex = vc[0];;
+            int min = vc[1];
+            if(min>P[minVertex]) continue;
+            if(v[minVertex]) continue;
             mst+=min;
+            v[minVertex] = true;
             if(cnt++==N-1) break;
+            
             for(int[] j : G[minVertex]){
                 if(!v[j[0]]&&P[j[0]]>j[1]){
                     P[j[0]] = j[1];
+                    pq.offer(new int[] {j[0],P[j[0]]});
                 }
             }
         }

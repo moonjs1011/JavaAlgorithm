@@ -3,7 +3,7 @@ package swea.month02.week02.day0213.problem7206;
 import java.io.*;
 import java.util.*;
 
-public class SolutionAI {
+public class SolutionAi {
 	// 중복 계산 방지 (메모이제이션)
 	static Map<Integer, Integer> memo = new HashMap<>();
          

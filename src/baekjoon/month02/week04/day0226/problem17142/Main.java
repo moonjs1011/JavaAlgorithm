@@ -13,21 +13,22 @@ import java.util.*;
 public class Main {
 	static int[] dy = { -1, 0, 1, 0 };
 	static int[] dx = { 0, -1, 0, 1 };
-	static int N, M,minDays;
+	static int N, M, minDays;
 	static int[][] matrix;
 	static int[][] dict;
 	static List<int[]> virus;
-	static int c=0;
+	static int zeroCnt;
+
 	static void subs(int index, List<int[]> target) {
 		if (index == virus.size()) {
-			if(target.size()==M) {
-			bfs(target);
+			if (target.size() == M) {
+				bfs(target);
 			}
 			return;
 		}
 		target.add(virus.get(index));
 		subs(index + 1, target);
-		target.remove(target.size()-1);
+		target.remove(target.size() - 1);
 		subs(index + 1, target);
 	}
 
@@ -54,42 +55,54 @@ public class Main {
 			}
 		}
 		int days = -1;
+
 		for (int i = 0; i < N; i++) {
 			for (int j = 0; j < N; j++) {
 				if (matrix[i][j] == 0) {
 					if (dict[i][j] == Integer.MAX_VALUE) {
 						return;
-					}
-					else days = Math.max(days, dict[i][j]);
+					} else
+						days = Math.max(days, dict[i][j]);
 				}
 			}
+
 		}
-		if(days==-1) return;
+
+		if (days == -1)
+			return;
 		minDays = Math.min(minDays, days);
 	}
+
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		// 초기 화int [][]dict =new int[N][N];
-		StringBuilder sb =new StringBuilder();
-		StringTokenizer st =new StringTokenizer(br.readLine());
+		StringBuilder sb = new StringBuilder();
+		StringTokenizer st = new StringTokenizer(br.readLine());
 		N = Integer.parseInt(st.nextToken());
 		M = Integer.parseInt(st.nextToken());
-		
-		matrix=new int[N][N];
+
+		matrix = new int[N][N];
 		dict = new int[N][N];
 		virus = new ArrayList<>();
-		for(int i=0;i<N;i++) {
-			st =new StringTokenizer(br.readLine());
-			for(int j=0;j<N;j++) {
+		for (int i = 0; i < N; i++) {
+			st = new StringTokenizer(br.readLine());
+			for (int j = 0; j < N; j++) {
 				matrix[i][j] = Integer.parseInt(st.nextToken());
-				if(matrix[i][j]==2) {
-					virus.add(new int[] {i,j});
+				if (matrix[i][j] == 0)
+					zeroCnt += 1;
+				if (matrix[i][j] == 2) {
+					virus.add(new int[] { i, j });
 				}
 			}
 		}
-		minDays=Integer.MAX_VALUE;
-		subs(0,new ArrayList<>());
-		if(minDays==Integer.MAX_VALUE) System.out.println(-1);
-		else System.out.println(minDays);
+		minDays = Integer.MAX_VALUE;
+		if (zeroCnt == 0)
+			minDays = 0;
+		else
+			subs(0, new ArrayList<>());
+		if (minDays == Integer.MAX_VALUE)
+			System.out.println(-1);
+		else
+			System.out.println(minDays);
 	}
 }

@@ -64,7 +64,7 @@ public class Main {
 				}
 			}
 		}
-	
+		if(days==-1) return;
 		minDays = Math.min(minDays, days);
 	}
 	public static void main(String[] args) throws IOException {

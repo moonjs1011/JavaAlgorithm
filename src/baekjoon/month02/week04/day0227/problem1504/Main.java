@@ -6,10 +6,10 @@ import java.util.*;
 public class Main {
 	static Map<Integer, List<int[]>> adjList = new HashMap<>();
 	static int N, E;
-
+	static Long INF_VALUE = 200000*1000L;
 	static Long[] dijkstra(int vid) {
 		Long[] dict = new Long[N + 1];
-		Arrays.fill(dict, Long.MAX_VALUE);
+		Arrays.fill(dict, INF_VALUE);
 		dict[vid] = 0L;
 		Queue<Integer> q = new ArrayDeque<>();
 		q.offer(vid);
@@ -62,10 +62,10 @@ public class Main {
 
 		Long dict1V1V2N = dict1[v1] + dictV1[v2] + dictV2[N];
 		Long dict1V2V1N = dict1[v2] + dictV2[v1] + dictV1[N];
-
-		if(dict1V1V2N<1) System.out.println(dict1V2V1N);
-		else if(dict1V2V1N<1) System.out.println(dict1V1V2N);
-		else System.out.println(Math.min(dict1V1V2N, dict1V2V1N));
+		
+		Long ans = Math.min(dict1V1V2N, dict1V2V1N);
+		if(ans>=INF_VALUE) System.out.println(-1);
+		else System.out.println(ans);
 
 		// 2->
 

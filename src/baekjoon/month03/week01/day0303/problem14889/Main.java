@@ -1,4 +1,4 @@
-package baekjoon.month03.week01.day0304.problem14889;
+package baekjoon.month03.week01.day0303.problem14889;
 
 import java.io.*;
 import java.util.*;
@@ -46,7 +46,7 @@ public class Main {
 				targetArr[depth] = indexArr[i]; 
 				comb(i+1,depth+1);
 			}
-		
+	
 	}
 	
 	public static void main(String[] args) throws IOException{

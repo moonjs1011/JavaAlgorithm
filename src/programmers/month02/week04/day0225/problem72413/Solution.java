@@ -17,7 +17,7 @@ class Solution {
             dict[edge[1]][edge[0]] = edge[2];
         }
         dict[s][s]=0;
-        for(int k=1;k<=n;k++){
+        for(int k=1;k<=n;k++){ //O(N^3)
             for(int i=1;i<=n;i++){
                 for(int j=1;j<=n;j++){
                     if(dict[i][k]!=Integer.MAX_VALUE && dict[k][j]!=Integer.MAX_VALUE&&dict[i][j]>dict[i][k]+dict[k][j]){

@@ -12,34 +12,57 @@
         static int[][] dist;
         static boolean[] check;
         static int maxVid,minBridgeLen;
-        static int minimumSpanningTree(){
-            int mst =0;
-            int cnt=0;
-            int[]P = new int[maxVid]; Arrays.fill(P,Integer.MAX_VALUE);
-            boolean[]v = new boolean[maxVid];
-            for(int i= 1; i<=maxVid;i++) {
-                int minVertex=-1;
+        static int minimumSpanningTree() {
+            int mst = 0;
+            int numOfIslands = maxVid - 1; // 실제 섬의 개수
+            
+            int[] minEdge = new int[maxVid]; 
+            Arrays.fill(minEdge, Integer.MAX_VALUE);
+            boolean[] visited = new boolean[maxVid];
+           
+            
+            
+       
+            //
+            // 1번 섬부터 탐색 시작
+            minEdge[1] = 0;
+
+            for (int i = 0; i < numOfIslands; i++) {
+                int minVertex = -1;
                 int minVal = Integer.MAX_VALUE;
-                for(int j=1;j<=maxVid;j++){
-                    if(i!=j && !v[j]&&dist[i][j]!=Integer.MAX_VALUE && P[j]>dist[i][j]){
+
+                // 1. 아직 방문하지 않은 섬 중에서 가장 짧은 다리로 연결할 수 있는 섬 찾기
+                for (int j = 1; j < maxVid; j++) {
+                    if (!visited[j] && minEdge[j] < minVal) {
+                        minVal = minEdge[j];
                         minVertex = j;
-                        minVal = dist[i][j];
                     }
                 }
-                mst+=minVal;
-                v[minVertex]=true;
-                if(cnt++==maxVid) return mst;
-                for(int j=1;j<=maxVid;j++){
-                    if(dist[minVertex][j]!=Integer.MAX_VALUE && !v[j] && P[j]>dist[minVertex][j]){
-                        P[j]=dist[minVertex][j];
+
+                // 2. 만약 더 이상 연결할 섬이 없는데 반복문이 끝나지 않았다면 (고립된 섬이 존재)
+                if (minVertex == -1) {
+                    return Integer.MAX_VALUE;
+                }
+
+                // 3. 해당 섬 방문 처리 및 총 다리 길이에 누적
+                visited[minVertex] = true;
+                mst += minVal;
+
+                // 4. 방금 연결한 섬을 기준으로, 다른 섬들로 가는 최소 다리 길이 갱신
+                for (int j = 1; j < maxVid; j++) {
+                    if (!visited[j] && dist[minVertex][j] != Integer.MAX_VALUE) {
+                        if (dist[minVertex][j] < minEdge[j]) {
+                            minEdge[j] = dist[minVertex][j];
+                        }
                     }
                 }
             }
-            return Integer.MAX_VALUE;
+            return mst;
         }
         static void dfs(int y, int x, int vid, int dir, int bridgeLength) {
-            if (matrix[y][x] != 0 && matrix[y][x] != vid &&bridgeLength>=3) {
-                dist[vid][matrix[y][x]] = Math.min(dist[vid][matrix[y][x]], bridgeLength-1);//현재 점은 길이에서 빼줌
+            if (matrix[y][x] != 0 && matrix[y][x]!=vid) {
+            	if(bridgeLength>=3)
+            		dist[vid][matrix[y][x]] = Math.min(dist[vid][matrix[y][x]], bridgeLength-1);//현재 점은 길이에서 빼줌
                 return;
             }
             int ny = y + dy[dir];

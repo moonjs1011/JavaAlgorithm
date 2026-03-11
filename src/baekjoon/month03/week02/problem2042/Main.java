@@ -7,7 +7,7 @@ public class Main {
 	static long[] segmentTree;
 	static int N;
 	static void update(int index,long value) {
-		arr[index]=value;
+		arr[index]=value; 
 		updateTree(1,1,N,index,value);
 	}
 	static void updateTree(int node, int nodeL, int nodeR,int index,long value) {
@@ -27,7 +27,7 @@ public class Main {
 		return queryTree(1, 1, N, a, b);
 	}
 	static long queryTree(int node,int nodeL,int nodeR, int queryL,int queryR) {
-		if(queryL>nodeR||nodeL<queryR) return 0;
+		if(queryL>nodeR||nodeL>queryR) return 0;
 		
 		if(queryL<=nodeL && nodeR<=queryR) {
 			return segmentTree[node];
@@ -46,9 +46,10 @@ public class Main {
 		int K = Integer.parseInt(st.nextToken());
 		 
 		arr =new long[N+1];
-		segmentTree = new long[N+1];
+		segmentTree = new long[4*N];
 		for(int i=1;i<=N;i++) {
-			arr[i] = Integer.parseInt(br.readLine());
+			long input = Long.parseLong(br.readLine());
+			update(i,input);
 		}
 		for(int i=0;i<M+K;i++) {
 			st =new StringTokenizer(br.readLine());

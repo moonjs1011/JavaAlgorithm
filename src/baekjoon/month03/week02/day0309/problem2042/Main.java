@@ -1,4 +1,4 @@
-package baekjoon.month03.week02.problem2042;
+package baekjoon.month03.week02.day0309.problem2042;
 
 import java.io.*;
 import java.util.*;

@@ -8,7 +8,7 @@ public class Main {
 	static boolean[][] available;
 	static int[] dy = { 1, 1 };
 	static int[] dx = { -1, 1 };
-	static int N;
+	static int N,maxDist;
 
 	static int[][] dijkstra(int y, int x) {
 		int[][] dict = new int[N][2*N-1];
@@ -24,7 +24,7 @@ public class Main {
 			for (int i = 0; i < 2; i++) {
 				int ny = cy + dy[i];
 				int nx = cx + dx[i];
-				if (ny >= 0 && ny < N && nx >= 0 && nx < N && available[ny][nx] && dict[ny][nx] < dict[cy][cx] + grid[ny][nx]) {
+				if (ny >= 0 && ny < N && nx >= 0 && nx < 2*N-1 && available[ny][nx] && dict[ny][nx] < dict[cy][cx] + grid[ny][nx]) {
 					dict[ny][nx] = dict[cy][cx] + grid[ny][nx];
 					q.offer(new int[] { ny, nx });
 				}
@@ -32,7 +32,20 @@ public class Main {
 		}
 		return dict;
 	}
-	
+	static void dfs(int y,int x,int depth,int sum) {
+		if(depth==N-1) {
+			maxDist = Math.max(sum, maxDist);
+			return;
+		}
+		int maxValue=0;
+		for(int i=0;i<2;i++) {
+			int ny = y + dy[i];
+			int nx = x + dx[i];
+			if (ny >= 0 && ny < N && nx >= 0 && nx < 2*N-1 && available[ny][nx]) {
+				dfs(ny,nx,depth+1,sum+grid[ny][nx]);
+			}
+		}
+	}
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		N = Integer.parseInt(br.readLine());
@@ -53,15 +66,22 @@ public class Main {
 //		for (int[] e : grid)
 //			System.out.println(Arrays.toString(e));
 		int maxDist =0;
-		for (int i = 0; i < N; i++) {
-			if (available[0][i]) {
-				int[][] dict = dijkstra(0, i);
-				
-				for(int j=0;j<2*N-1;j++) {
-					maxDist = Math.max(dict[N-1][j], maxDist);
-				}
-			}
+		int[][] dist = dijkstra(0,N-1);
+		for(int j=0;j<2*N-1;j++) {
+			if(available[N-1][j])
+				maxDist = Math.max(maxDist,dist[N-1][j]);
 		}
 		System.out.println(maxDist);
+//		dfs(0,N-1,0,grid[0][N-1]); <- 시간 초과
+		
+//		for(int i=N-1;i>0; i--) {
+//			for(int j=0;j<2*N-3;j++) {
+//				if(available[i][j]) {
+//					grid[i-1][j+1]+=Math.max(grid[i][j], grid[i][j+2]);
+//				}
+//			}
+//		}
+//		
+//		System.out.println(grid[0][N-1]);
 	}
 }

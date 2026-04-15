@@ -46,7 +46,7 @@ public class Solution {
 			init();
 			
 			StringTokenizer st = new StringTokenizer(br.readLine());
-			int _ = Integer.parseInt(st.nextToken()); // dummy input
+			int d = Integer.parseInt(st.nextToken()); // dummy input
 			int M = Integer.parseInt(st.nextToken());
 			st = new StringTokenizer(br.readLine());
 			for (int i = 0; i < M; i++) {

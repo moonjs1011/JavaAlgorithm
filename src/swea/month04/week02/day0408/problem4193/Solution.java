@@ -33,23 +33,26 @@ public class Solution {
                 int ny = cy + dy[i];
                 int nx = cx + dx[i];
 
-                if (ny < 0 || ny >= N || nx < 0 || nx >= N || grid[ny][nx] == 1) continue;
+                if (ny < 0 || ny >= N || nx < 0 || nx >= N) continue;
 
-                int nextDist = cDist + 1; // 기본적으로 1초 소요
-                if (grid[ny][nx] == 2) {
-                    // 소용돌이를 만났을 때만 대기 시간을 추가
-                    int waitTime = (3 - (cDist % 3)) % 3;
-                    nextDist += waitTime;
+                if (grid[ny][nx] == 0 && dist[ny][nx] > dist[cy][cx] + 1) {
+                    dist[ny][nx] = dist[cy][cx] + 1;
+                    pq.offer(new int[]{ny, nx, dist[cy][cx] + 1});
                 }
 
-                if (dist[ny][nx] > nextDist) {
-                    dist[ny][nx] = nextDist;
-                    pq.offer(new int[]{ny, nx, nextDist});
+                if (grid[ny][nx] == 2) {
+                    if (cDist % 3 == 0 && dist[ny][nx] > dist[cy][cx] + 1) {
+                        dist[ny][nx] = dist[cy][cx] + 1;
+                        pq.offer(new int[]{ny, nx, dist[cy][cx] + 1});
+                    } else {
+                        pq.offer(new int[]{cy, cx, dist[cy][cx] + 1});
+                    }
                 }
             }
         }
         return dist[endY][endX];
     }
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = null;
@@ -70,7 +73,7 @@ public class Solution {
             int endY = Integer.parseInt(st.nextToken());
             int endX = Integer.parseInt(st.nextToken());
 
-            int ans = dijkstra(startY,startX,endY,endX);
+            int ans = dijkstra(startY, startX, endY, endX);
             System.out.println(ans);
         }
 

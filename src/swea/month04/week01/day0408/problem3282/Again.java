@@ -1,4 +1,4 @@
-package swea.month04.week02.day0408.problem3282;
+package swea.month04.week01.day0408.problem3282;
 
 import java.io.*;
 import java.util.*;

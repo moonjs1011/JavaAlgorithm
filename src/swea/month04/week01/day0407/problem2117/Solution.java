@@ -1,4 +1,4 @@
-package swea.month04.week02.day0407.problem2117;
+package swea.month04.week01.day0407.problem2117;
 
 /*
  * 운영 비용 K^2 + (K-1)^2

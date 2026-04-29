@@ -1,4 +1,4 @@
-package study;
+package study.day0429;
 /*
 5
 0 5 10 8 7 
@@ -9,7 +9,6 @@ package study;
 
 output==>10
 */
-import java.io.*;
 
 import java.util.*;
 public class PrimMain {

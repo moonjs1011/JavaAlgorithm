@@ -1,4 +1,4 @@
-package study;
+package study.day0429;
 
 public class Billiards {
     public static void main(String[] args) {

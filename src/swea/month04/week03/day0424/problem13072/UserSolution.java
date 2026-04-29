@@ -39,7 +39,7 @@ class UserSolution
 
 	public void updateTeam(int mTeam, int mChangeScore)
 	{
-		Soilder existSoilder = m.get
+//		Soilder existSoilder = m.
 	}
 	
 	public int bestSoldier(int mTeam)

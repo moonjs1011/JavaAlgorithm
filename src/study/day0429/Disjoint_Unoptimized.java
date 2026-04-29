@@ -1,7 +1,5 @@
-package study;
+package study.day0429;
 
-import java.io.*;
-import java.util.*;
 public class Disjoint_Unoptimized {
 	static int MAXSIZE = 5000;
 	static int[] parent = new int[MAXSIZE];

@@ -1,87 +1,42 @@
     package swea.month04.week04.day0425.problem1248;
 
     import java.io.*;
+    import java.sql.SQLOutput;
     import java.util.*;
 
-    class Node {
-        int vid;
-        Node left;
-        Node right;
-        Node parent;
-
-        public Node(int vid) {
-            this.vid = vid;
-            this.left = this.right = this.parent = null;
-        }
-
-        public Node getLeft() {
-            return left;
-        }
-
-        public Node getRight() {
-            return right;
-        }
-
-        public Node getParent() {
-            return parent;
-        }
-
-        public void setLeft(Node node) {
-            this.left = node;
-        }
-
-        public void setRight(Node node) {
-            this.right = node;
-        }
-
-        public void setParent(Node node) {
-            this.parent = node;
-        }
-
-    }
-
-    class Tree {
-        Node root;
-
-        public Tree() {
-            this.root = new Node(1);
-        }
-
-        public void insertNode(int parentVid, int childVid) {
-            Node parentNode = searchNode(root, parentVid);
-            if (parentNode == null) return;
-
-            Node childNode = new Node(childVid);
-            if (parentNode.getLeft() == null) parentNode.setLeft(childNode);
-            else parentNode.setRight(childNode);
-
-            childNode.setParent(parentNode);
-        }
-
-        public Node searchNode(Node node, int vid) {
-            if (node == null) return null;
-            if (node.vid == vid) return node;
-            Node res = searchNode(node.getLeft(), vid);
-
-            if (res != null) return res;
-
-            return searchNode(node.getRight(), vid);
-
-        }
-        public int getSize(Node node) {
-            if (node == null) return 0;
-            return 1 + getSize(node.getLeft()) + getSize(node.getRight());
-        }
-    }
 
     public class Solution {
-        static void traversal(Node node, List<Integer> list) {
-            if (node==null)
-                return;
-            list.add(node.vid);
-            traversal(node.getParent(), list);
+        static Map<Integer,List<Integer>> tree;
+        static int[] parent;
+        static void traversal(List<Integer> ancestorList,int vid){
+                if(vid==1) {
+                    return;
+                }
+                ancestorList.add(parent[vid]);
+                traversal(ancestorList,parent[vid]);
         }
+        /*
+         * 함수자체에 문제가 있었음. 모든 조상이 같으면 -1이 리턴됌
+         */
+        static int getCommonAncestor(List<Integer> ancestorV1, List<Integer> ancestorV2){
+            int minSize = Math.min(ancestorV1.size(),ancestorV2.size());
+            int common = 1;
+            for(int i=0;i<minSize;i++){
+                int ancestor1 = ancestorV1.get(i);
+                int ancestor2 = ancestorV2.get(i);
 
+                if(ancestor1!=ancestor2) break;
+                common = ancestor1;
+            }
+            return common;
+        }
+        static int getSize(int vid) {
+            int size = 1;
+            for (int child : tree.get(vid)) {
+                size += getSize(child);
+            }
+            return size;
+        }
         public static void main(String[] args) throws IOException {
             BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
             int T = Integer.parseInt(br.readLine());
@@ -92,36 +47,35 @@
                 int v1 = Integer.parseInt(st.nextToken());
                 int v2 = Integer.parseInt(st.nextToken());
 
-                Tree tree = new Tree();
+                tree = new HashMap<>();
+                parent= new int[V+1];
+                for(int i=1;i<=V;i++) tree.put(i,new ArrayList<>());
+
                 st = new StringTokenizer(br.readLine());
                 for (int i = 0; i < E; i++) {
                     int parentVid = Integer.parseInt(st.nextToken());
                     int childVid = Integer.parseInt(st.nextToken());
-                    tree.insertNode(parentVid, childVid);
+                    tree.get(parentVid).add(childVid);
+                    parent[childVid] = parentVid;
                 }
-                List<Integer> ancestorV1 = new ArrayList<>();
-                List<Integer> ancestorV2 = new ArrayList<>();
 
-                Node node1 = tree.searchNode(tree.root, v1);
-                Node node2 = tree.searchNode(tree.root, v2);
+                List<Integer>ancestorV1 = new ArrayList<>();
+                List<Integer>ancestorV2 = new ArrayList<>();
 
-                traversal(node1, ancestorV1);
-                traversal(node2, ancestorV2);
+                traversal(ancestorV1,v1);
+                traversal(ancestorV2,v2);
 
-                int i = ancestorV1.size() - 1;
-                int j = ancestorV2.size() - 1;
-                int answer = -1;
-                while (i >= 0 && j >= 0) {
-                    if (!ancestorV1.get(i).equals(ancestorV2.get(j))) {
-                        break;
-                    }
-                    answer = ancestorV1.get(i);
-                    i--;
-                    j--;
-                }
-                Node subroot = tree.searchNode(tree.root,answer);
-                int size = tree.getSize(subroot);
-                System.out.println("#"+tc+ " "+answer+ " "+size);
+                Collections.reverse(ancestorV1);
+                Collections.reverse(ancestorV2);
+
+//                for(int v : ancestorV1) System.out.print(v+" ");
+//                System.out.println();
+//                for(int v : ancestorV2) System.out.print(v+" ");
+//                System.out.println();
+
+                int commonAncestorVid = getCommonAncestor(ancestorV1,ancestorV2);
+                int size = getSize(commonAncestorVid);
+                System.out.println("#"+tc+ " "+commonAncestorVid+ " "+size);
             }
         }
     }
